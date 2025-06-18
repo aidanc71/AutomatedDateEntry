@@ -10,18 +10,37 @@ using System.Diagnostics;
 using System.Reflection;
 using Excel = Microsoft.Office.Interop.Excel;
 
-namespace OnCallAutomationFInal
+// This program generates a list of dates excluding weekends in an Excel file, starting from a specified date.
+// The user just needs to set a starting date, desired amount of weeks, and file location. 
+// Then, run the DateAutomater.sln, press start, and use the generated dates however desired. 
+// (If you run the program multiple times without changing file name, it will overwrite the previous file but you have to close it first)
+
+namespace DateAutomation
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            List<int>  ThirtyOneDayMonths = new List<int>();
+            // CHANGE THESE VARIABLES TO CUSTOMIZE THE START DATE, NUMBER OF WEEKS, FILE LOCATION, AND FILE NAME.
+
+            int desiredWeeks = 100; // Change this to the number of weeks you want to generate dates for
+
+            int startingDay = 16; // Change this to the day of the month you want to start from (enter a monday to follow a typical work week)
+            int startingMonth = 6; // Change this to the number month you want to start from
+            int startingYear = 2025; // Change this to the year you want to start from
+
+            string desiredFileLocation = "C:\\Users\\aidan\\Documents\\MicrosoftOffice\\Excel\\AutomatedDates.xlsx"; //Change this to the desired path and file name of schedule. 
+                                                                                                                     // (double slashes may be required in the path)
+
+            // END OF CUSTOMIZABLE VARIABLES
+
+
+            List<int> ThirtyOneDayMonths = new List<int>();
             List<int> ThirtyDayMonths = new List<int>();
 
-            int day = 9;
-            int month = 12;
-            int year = 2024;
+            int day = startingDay;
+            int month = startingMonth;
+            int year = startingYear;
             int remainingDays = 0;
             bool changedDay = false;
             int leapYearCount = 4;
@@ -35,7 +54,7 @@ namespace OnCallAutomationFInal
 
 
             Spreadsheet document = new Spreadsheet();
-            Worksheet sheet = document.Workbook.Worksheets.Add("OnCallSched");
+            Worksheet sheet = document.Workbook.Worksheets.Add("Schedule");
 
             //
 
@@ -53,17 +72,16 @@ namespace OnCallAutomationFInal
 
 
             sheet.Cell("A1").Value = "Date";
-            sheet.Cell("B1").Value = "Name";
 
             //
 
-            for (int i = 2; i < 2000; i++)
+            for (int i = 2; i < desiredWeeks + 2; i++)
             {
                 sheet.Cell("A" + i.ToString()).Value = month + "/" + day + "/" + year + " - " + futureMonth + "/" + futureDay + "/" + futureYear;
-                
-                
+
+
                 /////////////////////////////////////////////Initial Date Logic //////////////////////////////////
-                
+
                 changedDay = false;
 
                 if (ThirtyOneDayMonths.Contains(month) && changedDay == false)
@@ -92,7 +110,7 @@ namespace OnCallAutomationFInal
                         month = 1;
                         year++;
                         leapYearCount++;
-                        if(leapYearCount == 5)
+                        if (leapYearCount == 5)
                         {
                             leapYearCount = 1;
                         }
@@ -254,15 +272,17 @@ namespace OnCallAutomationFInal
                 }
             }
 
-            //
+            //////Saving Document to Excel File///////
+            // Replace file location ("C:\Users\aidan\Documents\MicrosoftOffice\Excel\AutomatedDates.xlsx") with your own.
 
-            if (File.Exists(@"C:\Users\aidan\Documents\MicrosoftOffice\Excel\MockOnCallSheet.xlsx"))
+            if (File.Exists(desiredFileLocation)) // checks if previous version exists
             {
-                File.Delete(@"C:\Users\aidan\Documents\MicrosoftOffice\Excel\MockOnCallSheet.xlsx");
+                //FileStream oldDoc = new FileStream(desiredFileLocation, FileMode.Open, FileAccess.ReadWrite);
+                //oldDoc.Close(); // closes the file if it is open
+                File.Delete(desiredFileLocation); // deletes old version
             }
-            document.SaveAs(@"C:\Users\aidan\Documents\MicrosoftOffice\Excel\MockOnCallSheet.xlsx");
-            document.Close();
-            Process.Start(@"C:\Users\aidan\Documents\MicrosoftOffice\Excel\MockOnCallSheet.xlsx");
+            document.SaveAs(desiredFileLocation); // saves document in Excel Folder
+            Process.Start(desiredFileLocation);
         }
     }
 }
