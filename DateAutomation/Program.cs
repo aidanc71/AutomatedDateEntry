@@ -273,15 +273,11 @@ namespace DateAutomation
             }
 
             //////Saving Document to Excel File///////
-            // Replace file location ("C:\Users\aidan\Documents\MicrosoftOffice\Excel\AutomatedDates.xlsx") with your own.
-
             if (File.Exists(desiredFileLocation)) // checks if previous version exists
             {
-                //FileStream oldDoc = new FileStream(desiredFileLocation, FileMode.Open, FileAccess.ReadWrite);
-                //oldDoc.Close(); // closes the file if it is open
                 File.Delete(desiredFileLocation); // deletes old version
             }
-            document.SaveAs(desiredFileLocation); // saves document in Excel Folder
+            document.SaveAs(desiredFileLocation); // saves document @ desired location
             Process.Start(desiredFileLocation);
         }
     }
