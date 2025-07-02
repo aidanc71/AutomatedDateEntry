@@ -20,23 +20,22 @@ namespace DateAutomation
         {
             // CUSTOMIZABLE VARIABLES
 
+            
+            Console.WriteLine("Enter your desired starting year: ");
+            int startingYear = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter your desired starting month (1-12): "); 
+            int startingMonth = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter your desired starting day (1-31): ");
+            int startingDay = int.Parse(Console.ReadLine());
+            
             Console.WriteLine("Enter the number of weeks you want to generate dates for: ");
             int desiredWeeks = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter the starting day (1-31): ");
-            int startingDay = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the starting month (1-12): "); 
-            int startingMonth = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the starting year: ");
-            int startingYear = int.Parse(Console.ReadLine());
 
             string exePath = Assembly.GetExecutingAssembly().Location;
             string exeDirectory = Path.GetDirectoryName(exePath);
             string desiredFileLocation = Path.Combine(exeDirectory, "AutomatedDates.xlsx");
-            
-            // (double slashes may be required in the path)
-            //"C:\\Users\\aidan\\Documents\\MicrosoftOffice\\Excel\\AutomatedDates.xlsx"; //Change this to the desired path and file name of schedule. 
-            // (double slashes may be required in the path)
 
             // END OF CUSTOMIZABLE VARIABLES
 
