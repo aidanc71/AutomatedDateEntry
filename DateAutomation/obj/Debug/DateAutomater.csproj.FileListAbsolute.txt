@@ -1,4 +1,6 @@
 E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\bin\Debug\OnCallAutomationFInal.exe.config
+E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\bin\Debug\OnCallAutomationFInal.exe.manifest
+E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\bin\Debug\OnCallAutomationFInal.application
 E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\bin\Debug\OnCallAutomationFInal.exe
 E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\bin\Debug\OnCallAutomationFInal.pdb
 E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\bin\Debug\Bytescout.Spreadsheet.dll
@@ -6,6 +8,8 @@ E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\bin\Debug\
 E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\obj\Debug\DateAutomater.csproj.AssemblyReference.cache
 E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\obj\Debug\DateAutomater.csproj.ResolveComReference.cache
 E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\obj\Debug\DateAutomater.csproj.CoreCompileInputs.cache
+E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\obj\Debug\OnCallAutomationFInal.exe.manifest
+E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\obj\Debug\OnCallAutomationFInal.application
 E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\obj\Debug\DateAutomater.csproj.CopyComplete
 E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\obj\Debug\OnCallAutomationFInal.exe
 E:\Documents\Coding\GitHub\Projects\AutomatedDateEntry\DateAutomation\obj\Debug\OnCallAutomationFInal.pdb

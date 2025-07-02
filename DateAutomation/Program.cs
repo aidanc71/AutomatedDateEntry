@@ -10,10 +10,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Excel = Microsoft.Office.Interop.Excel;
 
-// This program generates a list of dates excluding weekends in an Excel file, starting from a specified date.
-// The user just needs to set a starting date, desired amount of weeks, and file location. 
-// Then, run the DateAutomater.sln, press start, and use the generated dates however desired. 
-// (If you run the program multiple times without changing file name, it will overwrite the previous file but you have to close it first)
+// This program generates a list of dates into an Excel file, starting from a specified date, and incrementing by one week.
 
 namespace DateAutomation
 {
@@ -21,42 +18,31 @@ namespace DateAutomation
     {
         static void Main(string[] args)
         {
-            // CHANGE THESE VARIABLES TO CUSTOMIZE THE START DATE, NUMBER OF WEEKS, FILE LOCATION, AND FILE NAME.
+            // CUSTOMIZABLE VARIABLES
 
-            int desiredWeeks = 100; // Change this to the number of weeks you want to generate dates for
+            Console.WriteLine("Enter the number of weeks you want to generate dates for: ");
+            int desiredWeeks = int.Parse(Console.ReadLine());
 
-            int startingDay = 16; // Change this to the day of the month you want to start from (enter a monday to follow a typical work week)
-            int startingMonth = 6; // Change this to the number month you want to start from
-            int startingYear = 2025; // Change this to the year you want to start from
+            Console.WriteLine("Enter the starting day (1-31): ");
+            int startingDay = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the starting month (1-12): "); 
+            int startingMonth = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the starting year: ");
+            int startingYear = int.Parse(Console.ReadLine());
 
-            string desiredFileLocation = "C:\\Users\\aidan\\Documents\\MicrosoftOffice\\Excel\\AutomatedDates.xlsx"; //Change this to the desired path and file name of schedule. 
-                                                                                                                     // (double slashes may be required in the path)
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string exeDirectory = Path.GetDirectoryName(exePath);
+            string desiredFileLocation = Path.Combine(exeDirectory, "AutomatedDates.xlsx");
+            
+            // (double slashes may be required in the path)
+            //"C:\\Users\\aidan\\Documents\\MicrosoftOffice\\Excel\\AutomatedDates.xlsx"; //Change this to the desired path and file name of schedule. 
+            // (double slashes may be required in the path)
 
             // END OF CUSTOMIZABLE VARIABLES
 
 
             List<int> ThirtyOneDayMonths = new List<int>();
             List<int> ThirtyDayMonths = new List<int>();
-
-            int day = startingDay;
-            int month = startingMonth;
-            int year = startingYear;
-            int remainingDays = 0;
-            bool changedDay = false;
-            int leapYearCount = 4;
-
-            int futureMonth = 12;
-            int futureDay = 15;
-            int futureYear = 2024;
-            int remainingFutureDays = 0;
-            bool changedFutureDay = false;
-            int futureLeapYearCount = 4;
-
-
-            Spreadsheet document = new Spreadsheet();
-            Worksheet sheet = document.Workbook.Worksheets.Add("Schedule");
-
-            //
 
             ThirtyOneDayMonths.Add(1);
             ThirtyOneDayMonths.Add(3);
@@ -69,6 +55,77 @@ namespace DateAutomation
             ThirtyDayMonths.Add(6);
             ThirtyDayMonths.Add(9);
             ThirtyDayMonths.Add(11);
+            
+            int day = startingDay;
+            int month = startingMonth;
+            int year = startingYear;
+            int remainingDays = 0;
+            bool changedDay = false;
+            int leapYearCount = startingYear % 4; // Initialize leap year count based on the starting year
+            if (leapYearCount == 0) // If the starting year is a leap year, set count to 4
+            {
+                leapYearCount = 4;
+            }
+
+            int futureMonth = startingMonth;
+            int futureDay = startingDay + 6;
+            int futureYear = startingYear;
+            int remainingFutureDays = 0;
+            bool changedFutureDay = false;
+            int futureLeapYearCount = leapYearCount;
+
+            // Future Date Variables Initialization
+            if (futureMonth == 12)
+            {
+                if (futureDay > 31)
+                {
+                    remainingFutureDays = futureDay - 31;
+                    futureDay = remainingFutureDays;
+                    futureMonth = 1;
+                    futureYear++;
+                    futureLeapYearCount++;
+                    if (futureLeapYearCount == 5)
+                    {
+                        futureLeapYearCount = 1;
+                    }
+                }
+            }
+            else if (futureMonth == 2)
+            {
+                if (futureLeapYearCount != 4 && futureDay > 28)
+                {
+                    remainingFutureDays = futureDay - 28;
+                    futureDay = remainingFutureDays;
+                    futureMonth++;
+                }
+                else if (futureLeapYearCount == 4 && futureDay > 29)
+                {
+                    remainingFutureDays = futureDay - 29;
+                    futureDay = remainingFutureDays;
+                    futureMonth++;
+                }
+            }
+            else if (ThirtyDayMonths.Contains(month) && futureDay > 30)
+            {
+                remainingFutureDays = futureDay - 30;
+                futureDay = remainingFutureDays;
+                futureMonth++;
+            }
+            else if (ThirtyOneDayMonths.Contains(month) && futureDay > 31)
+            {
+                remainingFutureDays = futureDay - 31;
+                futureDay = remainingFutureDays;
+                futureMonth++;
+            }
+            // End of Future Date Variables Initialization
+                
+
+            Spreadsheet document = new Spreadsheet();
+            Worksheet sheet = document.Workbook.Worksheets.Add("Schedule");
+
+            //
+
+
 
 
             sheet.Cell("A1").Value = "Date";
@@ -109,7 +166,7 @@ namespace DateAutomation
                         day = 7 - remainingDays;
                         month = 1;
                         year++;
-                        leapYearCount++;
+                        leapYearCount++ ;
                         if (leapYearCount == 5)
                         {
                             leapYearCount = 1;
